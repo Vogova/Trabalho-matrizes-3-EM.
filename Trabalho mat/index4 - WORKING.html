@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Operações com Matrizes</title>
+  </head>
+  <body>
+    <h1>Operações com Matrizes</h1>
+    <p>Preencha os valores para as matrizes 2x2 abaixo:</p>
+    <form>
+      <label for="matrizA">Matriz A</label>
+      <br />
+      <input type="number" name="matrizA00" id="matrizA00" />
+      <input type="number" name="matrizA01" id="matrizA01" />
+      <br />
+      <input type="number" name="matrizA10" id="matrizA10" />
+      <input type="number" name="matrizA11" id="matrizA11" />
+      <br />
+      <label for="matrizB">Matriz B</label>
+      <br />
+      <input type="number" name="matrizB00" id="matrizB00" />
+      <input type="number" name="matrizB01" id="matrizB01" />
+      <br />
+      <input type="number" name="matrizB10" id="matrizB10" />
+      <input type="number" name="matrizB11" id="matrizB11" />
+      <br />
+      <label for="matrizC">Matriz C</label>
+      <br />
+      <input type="number" name="matrizC00" id="matrizC00" />
+      <input type="number" name="matrizC01" id="matrizC01" />
+      <br />
+      <input type="number" name="matrizC10" id="matrizC10" />
+      <input type="number" name="matrizC11" id="matrizC11" />
+      <br />
+      <label for="matrizApositiva">Matriz A é positiva?</label>
+      <input type="checkbox" name="matrizApositiva" id="matrizApositiva" />
+      <br />
+      <label for="operacao">Operação entre A e B</label>
+      <select name="operacao" id="operacao">
+        <option value="somar">Somar</option>
+        <option value="subtrair">Subtrair</option>
+      </select>
+      <br />
+      <label for="operacao2">Operação entre A+B e C</label>
+      <select name="operacao2" id="operacao2">
+        <option value="somar">Somar</option>
+        <option value="subtrair">Subtrair</option>
+      </select>
+      <br />
+      <button type="button" onclick="calcular()">Calcular</button>
+    </form>
+    <h2>Resultados</h2>
+    <p>Determinante da matriz A+B+C: <span id="determinante"></span></p>
+    <p>Matriz A * Matriz B: <span id="produtoAB"></span></p>
+    <p>Matriz C elevada ao quadrado: <span id="potenciaC"></span></p>
+    <p>Produto entre Matriz AB e Matriz C²: <span id="produtoABC"></span></p>
+    <script>
+      function calcular() {
+            // Recupera os valores das matrizes A, B e C
+			let matrizA = [      [parseFloat(document.getElementById("matrizA00").value), parseFloat(document.getElementById("matrizA01").value)],
+			[parseFloat(document.getElementById("matrizA10").value), parseFloat(document.getElementById("matrizA11").value)]
+			];
+			let matrizB = [      [parseFloat(document.getElementById("matrizB00").value), parseFloat(document.getElementById("matrizB01").value)],
+			[parseFloat(document.getElementById("matrizB10").value), parseFloat(document.getElementById("matrizB11").value)]
+			];
+			let matrizC = [      [parseFloat(document.getElementById("matrizC00").value), parseFloat(document.getElementById("matrizC01").value)],
+			[parseFloat(document.getElementById("matrizC10").value), parseFloat(document.getElementById("matrizC11").value)]
+			];
+
+			// Verifica se a matriz A é positiva ou negativa
+			let matrizApositiva = document.getElementById("matrizApositiva").checked;
+			if (!matrizApositiva) {
+			matrizA = multiplicarPorEscalar(matrizA, -1);
+			}
+
+			// Realiza a operação entre A e B
+			let operacao = document.getElementById("operacao").value;
+			let matrizAB;
+			if (operacao === "somar") {
+			matrizAB = somarMatrizes(matrizA, matrizB);
+			} else if (operacao === "subtrair") {
+			matrizAB = subtrairMatrizes(matrizA, matrizB);
+			}
+
+			// Realiza a operação entre A+B e C
+			let operacao2 = document.getElementById("operacao2").value;
+			let matrizABC;
+			if (operacao2 === "somar") {
+			matrizABC = somarMatrizes(matrizAB, matrizC);
+			} else if (operacao2 === "subtrair") {
+			matrizABC = subtrairMatrizes(matrizAB, matrizC);
+			}
+
+			// Calcula a determinante da matriz A+B+C
+			let determinante = calcularDeterminante(matrizABC);
+			document.getElementById("determinante").innerText = determinante;
+
+			// Calcula o produto entre as matrizes A e B
+			let produtoAB = multiplicarMatrizes(matrizA, matrizB);
+			document.getElementById("produtoAB").innerText = JSON.stringify(produtoAB);
+
+			// Calcula a matriz C elevada ao quadrado
+			let potenciaC = potenciaMatriz(matrizC, 2);
+			document.getElementById("potenciaC").innerText = JSON.stringify(potenciaC);
+
+			// Calcula o produto entre as matrizes AB e C²
+			let produtoABC = multiplicarMatrizes(produtoAB, potenciaC);
+			document.getElementById("produtoABC").innerText = JSON.stringify(produtoABC);
+		}
+
+		function somarMatrizes(matrizA, matrizB) {
+			let resultado = [];
+			for (let i = 0; i < matrizA.length; i++) {
+			resultado[i] = [];
+			for (let j = 0; j < matrizA[i].length; j++) {
+				resultado[i][j] = matrizA[i][j] + matrizB[i][j];
+			}
+			}
+			return resultado;
+		}
+
+		function subtrairMatrizes(matrizA, matrizB) {
+			let resultado = [];
+			for (let i = 0; i < matrizA.length; i++) {
+			resultado[i] = [];
+			for (let j = 0; j < matrizA[i].length; j++) {
+			resultado[i][j] = matrizA[i][j] - matrizB[i][j];
+			}
+			}
+		return resultado;
+		}
+		function multiplicarMatrizes(matrizA, matrizB) {
+			let resultado = [];
+			for (let i = 0; i < matrizA.length; i++) {
+			resultado[i] = [];
+			for (let j = 0; j < matrizB[0].length; j++) {
+				resultado[i][j] = 0;
+				for (let k = 0; k < matrizA[0].length; k++) {
+				resultado[i][j] += matrizA[i][k] * matrizB[k][j];
+				}
+			}
+			}
+			return resultado;
+		}
+
+		function multiplicarPorEscalar(matriz, escalar) {
+			let resultado = [];
+			for (let i = 0; i < matriz.length; i++) {
+			resultado[i] = [];
+			for (let j = 0; j < matriz[i].length; j++) {
+				resultado[i][j] = matriz[i][j] * escalar;
+			}
+			}
+			return resultado;
+		}
+
+		function calcularDeterminante(matriz) {
+			let det = 0;
+			if (matriz.length === 2 && matriz[0].length === 2) {
+			det = matriz[0][0] * matriz[1][1] - matriz[0][1] * matriz[1][0];
+			} else {
+			for (let i = 0; i < matriz.length; i++) {
+				let submatriz = [];
+				for (let j = 1; j < matriz.length; j++) {
+				submatriz[j - 1] = matriz[j].slice(0, i).concat(matriz[j].slice(i + 1));
+				}
+				det += matriz[0][i] * calcularDeterminante(submatriz) * Math.pow(-1, i);
+			}
+			}
+			return det;
+		}
+
+		function potenciaMatriz(matriz, expoente) {
+			if (expoente === 0) {
+			return [[1, 0], [0, 1]];
+			} else if (expoente === 1) {
+			return matriz;
+			} else if (expoente % 2 === 0) {
+			let submatriz = potenciaMatriz(matriz, expoente / 2);
+			return multiplicarMatrizes(submatriz, submatriz);
+			} else {
+			return multiplicarMatrizes(matriz, potenciaMatriz(matriz, expoente - 1));
+			}
+		}
+
+	</script>
+</body>
+</html>
+

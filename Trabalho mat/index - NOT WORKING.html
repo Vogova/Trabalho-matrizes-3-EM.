@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculadora de Matriz</title>
+</head>
+<body>
+    <h1>Calculadora de Matriz</h1>
+    <div id="form">
+        <fieldset>
+            <legend>Insira um valor para uma matriz 2x2:</legend>
+            <label>a11: <input type="number" id="a11"></label>
+            <label>a12: <input type="number" id="a12"></label>
+            <br>
+            <label>a21: <input type="number" id="a21"></label>
+            <label>a22: <input type="number" id="a22"></label>
+        </fieldset>
+        
+        <fieldset>
+            <legend>Insira um valor para uma matriz 2x2:</legend>
+            <label>b11: <input type="number" id="b11"></label>
+            <label>b12: <input type="number" id="b12"></label>
+            <br>
+            <label>b21: <input type="number" id="b21"></label>
+            <label>b22: <input type="number" id="b22"></label>
+        </fieldset>
+        
+        <fieldset>
+            <legend>Insira um valor para uma matriz 2x2:</legend>
+            <label>c11: <input type="number" id="c11"></label>
+            <label>c12: <input type="number" id="c12"></label>
+            <br>
+            <label>c21: <input type="number" id="c21"></label>
+            <label>c22: <input type="number" id="c22"></label>
+        </fieldset>
+        
+        <button type="button" onclick="calculate()">Calcular</button>
+    </form>
+    <style>
+        *{
+            font-family: 'Courier New', Courier, monospace;
+            color: white;
+            background-color: black;
+        }
+        h1{
+          width: 100%;
+        }
+        #form, h1{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        fieldset, button{
+            width: 130px;
+            height: 200px;
+            margin: 10px;
+            border: solid, 5px;
+            border-radius: 5px;
+            padding: 17px;
+        }
+
+        button{
+            height: 20px;
+        }
+
+    </style>
+    <script>
+        function calculate() {
+            var a11 = parseFloat(document.getElementById("a11").value);
+            var a12 = parseFloat(document.getElementById("a12").value);
+            var a21 = parseFloat(document.getElementById("a21").value);
+            var a22 = parseFloat(document.getElementById("a22").value);
+            
+            var b11 = parseFloat(document.getElementById("b11").value);
+            var b12 = parseFloat(document.getElementById("b12").value);
+            var b21 = parseFloat(document.getElementById("b21").value);
+            var b22 = parseFloat(document.getElementById("b22").value);
+            
+            var c11 = parseFloat(document.getElementById("c11").value);
+            var c12 = parseFloat(document.getElementById("c12").value);
+            var c21 = parseFloat(document.getElementById("c21").value);
+            var c22 = parseFloat(document.getElementById("c22").value);
+            
+            // perform the calculation
+            var result = [];
+            result.push([a11 * b11 - c11, a12 * b12 - c12]);
+            result.push([a21 * b21 - c21, a22 * b22 - c22]);
+            
+            // display the result
+            var output = "Resultado:<br>";
+            output += "[" + result[0][0] + ", " + result[0][1] + "]<br>";
+            output += "[" + result[1][0] + ", " + result[1][1] + "]<br>";
+            document.getElementById("output").innerHTML = output;
+            }
+    </script>
+    <div id="output"></div>
+</body>   

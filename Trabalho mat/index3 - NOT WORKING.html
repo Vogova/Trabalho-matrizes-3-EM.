@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Operações com Matrizes</title>
+  </head>
+  <body>
+    <h1>Operações com Matrizes</h1>
+    <form>
+      <label for="matrix-a">Matriz A:</label>
+      <br />
+      <textarea id="matrix-a" rows="3" cols="5"></textarea>
+      <br />
+      <label for="matrix-b">Matriz B:</label>
+      <br />
+      <textarea id="matrix-b" rows="3" cols="5"></textarea>
+      <br />
+      <label for="matrix-c">Matriz C:</label>
+      <br />
+      <textarea id="matrix-c" rows="3" cols="5"></textarea>
+      <br />
+      <label for="sign-a">Sinal da matriz A:</label>
+      <br />
+      <select id="sign-a">
+        <option value="positive">Positiva (+)</option>
+        <option value="negative">Negativa (-)</option>
+      </select>
+      <br />
+      <label for="operation">Operação:</label>
+      <br />
+      <select id="operation">
+        <option value="addition">Soma (A + B)</option>
+        <option value="subtraction">Subtração (A - B)</option>
+      </select>
+      <br />
+      <label for="result-sign">Sinal do resultado:</label>
+      <br />
+      <select id="result-sign">
+        <option value="positive">Positivo (+)</option>
+        <option value="negative">Negativo (-)</option>
+      </select>
+      <br />
+      <button type="button" onclick="calculate()">Calcular</button>
+    </form>
+    <br />
+    <div id="result"></div>
+  </body>
+  <script src="script.js"></script>
+</html>
