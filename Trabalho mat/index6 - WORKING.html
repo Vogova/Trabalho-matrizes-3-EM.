@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Desenhar Polígono</title>
+  <style>
+    #canvas {
+      width: 500px;
+      height: 500px;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <h1>Desenhar Polígono</h1>
+  <p>Insira os valores das coordenadas:</p>
+  <div>
+    <label>Coordenada 1:</label>
+    <input type="text" id="coord1x" placeholder="x">
+    <input type="text" id="coord1y" placeholder="y">
+  </div>
+  <div>
+    <label>Coordenada 2:</label>
+    <input type="text" id="coord2x" placeholder="x">
+    <input type="text" id="coord2y" placeholder="y">
+  </div>
+  <div>
+    <label>Coordenada 3:</label>
+    <input type="text" id="coord3x" placeholder="x">
+    <input type="text" id="coord3y" placeholder="y">
+  </div>
+  <div>
+    <label>Coordenada 4:</label>
+    <input type="text" id="coord4x" placeholder="x">
+    <input type="text" id="coord4y" placeholder="y">
+  </div>
+  <div>
+    <label>Coordenada 5:</label>
+    <input type="text" id="coord5x" placeholder="x">
+    <input type="text" id="coord5y" placeholder="y">
+  </div>
+  <div>
+    <label>Coordenada 6:</label>
+    <input type="text" id="coord6x" placeholder="x">
+    <input type="text" id="coord6y" placeholder="y">
+  </div>
+  <button onclick="desenharPoligono()">Desenhar</button>
+  <canvas id="canvas"></canvas>
+  <script>
+    function desenharPoligono() {
+      var canvas = document.getElementById("canvas");
+      var ctx = canvas.getContext("2d");
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.beginPath();
+      ctx.moveTo(document.getElementById("coord1x").value, document.getElementById("coord1y").value);
+      ctx.lineTo(document.getElementById("coord2x").value, document.getElementById("coord2y").value);
+      ctx.lineTo(document.getElementById("coord3x").value, document.getElementById("coord3y").value);
+      ctx.lineTo(document.getElementById("coord4x").value, document.getElementById("coord4y").value);
+      ctx.lineTo(document.getElementById("coord5x").value, document.getElementById("coord5y").value);
+      ctx.lineTo(document.getElementById("coord6x").value, document.getElementById("coord6y").value);
+      ctx.closePath();
+      ctx.stroke();
+    }
+  </script>
+</body>
+</html>
