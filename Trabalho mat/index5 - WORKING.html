@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Matrizes</title>
+    <script>
+      function calcular() {
+        // Obter os valores da matriz A
+        var a11 = parseFloat(document.getElementById("a11").value);
+        var a12 = parseFloat(document.getElementById("a12").value);
+        var a13 = parseFloat(document.getElementById("a13").value);
+        var a14 = parseFloat(document.getElementById("a14").value);
+        var a21 = parseFloat(document.getElementById("a21").value);
+        var a22 = parseFloat(document.getElementById("a22").value);
+        var a23 = parseFloat(document.getElementById("a23").value);
+        var a24 = parseFloat(document.getElementById("a24").value);
+        var a31 = parseFloat(document.getElementById("a31").value);
+        var a32 = parseFloat(document.getElementById("a32").value);
+        var a33 = parseFloat(document.getElementById("a33").value);
+        var a34 = parseFloat(document.getElementById("a34").value);
+
+        // Obter os valores da matriz B
+        var b11 = parseFloat(document.getElementById("b11").value);
+        var b12 = parseFloat(document.getElementById("b12").value);
+        var b13 = parseFloat(document.getElementById("b13").value);
+        var b21 = parseFloat(document.getElementById("b21").value);
+        var b22 = parseFloat(document.getElementById("b22").value);
+        var b23 = parseFloat(document.getElementById("b23").value);
+        var b31 = parseFloat(document.getElementById("b31").value);
+        var b32 = parseFloat(document.getElementById("b32").value);
+        var b33 = parseFloat(document.getElementById("b33").value);
+        var b41 = parseFloat(document.getElementById("b41").value);
+        var b42 = parseFloat(document.getElementById("b42").value);
+        var b43 = parseFloat(document.getElementById("b43").value);
+
+        // Realizar a multiplicação das matrizes A e B
+        var c11 = a11 * b11 + a12 * b21 + a13 * b31 + a14 * b41;
+        var c12 = a11 * b12 + a12 * b22 + a13 * b32 + a14 * b42;
+        var c13 = a11 * b13 + a12 * b23 + a13 * b33 + a14 * b43;
+        var c21 = a21 * b11 + a22 * b21 + a23 * b31 + a24 * b41;
+        var c22 = a21 * b12 + a22 * b22 + a23 * b32 + a24 * b42;
+        var c23 = a21 * b13 + a22 * b23 + a23 * b33 + a24 * b43;
+        var c31 = a31 * b11 + a32 * b21 + a33 * b31 + a34 * b41;
+        var c32 = a31 * b12 + a32 * b22 + a33 * b32 + a34 * b42;
+        var c33 = a31 * b13 + a32 * b23 + a33 * b33 + a34 * b43;
+
+        // Calcular a determinante da matriz resultante
+        var det = c11 * c22 * c33 + c12 * c23 * c31 + c13 * c21 * c32 - c13 * c22 * c31 - c11 * c23 * c32 - c12 * c21 * c33;
+
+    // Exibir o resultado na interface gráfica
+    document.getElementById("resultado").innerHTML = "<p>Matriz resultante:</p>" +
+      "<table>" +
+      "<tr><td>" + c11 + "</td><td>" + c12 + "</td><td>" + c13 + "</td></tr>" +
+      "<tr><td>" + c21 + "</td><td>" + c22 + "</td><td>" + c23 + "</td></tr>" +
+      "<tr><td>" + c31 + "</td><td>" + c32 + "</td><td>" + c33 + "</td></tr>" +
+      "</table>" +
+      "<p>Determinante da matriz resultante: " + det + "</p>";
+  }
+</script>
+</head>
+<body>
+<h1>Matrizes</h1>
+    <h2>Insira os valores das matrizes A e B:</h2>
+    <h3>Matriz A:</h3>
+    <table>
+      <tr>
+        <td><input type="text" id="a11"></td>
+        <td><input type="text" id="a12"></td>
+        <td><input type="text" id="a13"></td>
+        <td><input type="text" id="a14"></td>
+      </tr>
+      <tr>
+        <td><input type="text" id="a21"></td>
+        <td><input type="text" id="a22"></td>
+        <td><input type="text" id="a23"></td>
+        <td><input type="text" id="a24"></td>
+      </tr>
+      <tr>
+        <td><input type="text" id="a31"></td>
+        <td><input type="text" id="a32"></td>
+        <td><input type="text" id="a33"></td>
+        <td><input type="text" id="a34"></td>
+      </tr>
+    </table>
+    <h3>Matriz B:</h3>
+    <table>
+      <tr>
+        <td><input type="text" id="b11"></td>
+        <td><input type="text" id="b12"></td>
+        <td><input type="text" id="b13"></td>
+      </tr>
+      <tr>
+        <td><input type="text" id="b21"></td>
+        <td><input type="text" id="b22"></td>
+        <td><input type="text" id="b23"></td>
+      </tr>
+      <tr>
+        <td><input type="text" id="b31"></td>
+        <td><input type="text" id="b32"></td>
+        <td><input type="text" id="b33"></td>
+      </tr>
+      <tr>
+        <td><input type="text" id="b41"></td>
+        <td><input type="text" id="b42"></td>
+        <td><input type="text" id="b43"></td>
+      </tr>
+    </table>
+    <button onclick="calcular()">Calcular</button>
+    <div id="resultado"></div>
+  </body>
+</html>
