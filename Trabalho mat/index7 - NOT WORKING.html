@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Polígono no Plano Cartesiano</title>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			background-color: #F5F5F5;
+		}
+		
+		#canvas {
+			display: block;
+			margin: 0 auto;
+			border: 1px solid black;
+		}
+
+		#coordenadas {
+			text-align: center;
+		}
+
+		#coordenadas input[type="number"] {
+			width: 50px;
+			margin-right: 10px;
+		}
+
+		#coordenadas button {
+			margin-top: 10px;
+			padding: 5px;
+			background-color: #4CAF50;
+			border: none;
+			color: white;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		#coordenadas button:hover {
+			background-color: #3E8E41;
+		}
+
+		#coordenadas p {
+			color: red;
+			font-weight: bold;
+		}
+	</style>
+</head>
+<body>
+	<div id="coordenadas">
+		<p id="erro"></p>
+		<label for="ponto1">Ponto 1:</label>
+		<input type="number" id="ponto1x" placeholder="X">
+		<input type="number" id="ponto1y" placeholder="Y"><br>
+		<label for="ponto2">Ponto 2:</label>
+		<input type="number" id="ponto2x" placeholder="X">
+		<input type="number" id="ponto2y" placeholder="Y"><br>
+		<label for="ponto3">Ponto 3:</label>
+		<input type="number" id="ponto3x" placeholder="X">
+		<input type="number" id="ponto3y" placeholder="Y"><br>
+		<label for="ponto4">Ponto 4:</label>
+		<input type="number" id="ponto4x" placeholder="X">
+		<input type="number" id="ponto4y" placeholder="Y"><br>
+		<label for="ponto5">Ponto 5:</label>
+		<input type="number" id="ponto5x" placeholder="X">
+		<input type="number" id="ponto5y" placeholder="Y"><br>
+		<label for="ponto6">Ponto 6:</label>
+		<input type="number" id="ponto6x" placeholder="X">
+		<input type="number" id="ponto6y" placeholder="Y"><br>
+		<button onclick="desenhar()">Desenhar</button>
+	</div>
+	<canvas id="canvas"></canvas>
+	<script>
+        const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+const pontos = [];
+
+function desenhar() {
+    limparTela();
+    pontos.length = 0;
+    const p1 = {x: Number(document.getElementById("ponto1x").value), y: Number(document.getElementById("ponto1y").value)};
+    const p2 = {x: Number(document.getElementById("ponto2x").value), y: Number(document.getElementById("ponto2y").value)};
+
+        const p3 = {x: Number(document.getElementById("ponto3x").value), y: Number(document.getElementById("ponto3y").value)};
+        const p4 = {x: Number(document.getElementById("ponto4x").value), y: Number(document.getElementById("ponto4y").value)};
+        const p5 = {x: Number(document.getElementById("ponto5x").value), y: Number(document.getElementById("ponto5y").value)};
+        const p6 = {x: Number(document.getElementById("ponto6x").value), y: Number(document.getElementById("ponto6y").value)};
+
+        if (isNaN(p1.x) || isNaN(p1.y) || isNaN(p2.x) || isNaN(p2.y) || isNaN(p3.x) || isNaN(p3.y) ||
+            isNaN(p4.x) || isNaN(p4.y) || isNaN(p5.x) || isNaN(p5.y) || isNaN(p6.x) || isNaN(p6.y)) {
+            document.getElementById("erro").innerHTML = "Todos os campos devem ser preenchidos com números.";
+            return;
+        }
+
+        pontos.push(p1, p2, p3, p4, p5, p6);
+
+        for (let i = 0; i < pontos.length; i++) {
+            desenharPonto(pontos[i].x, pontos[i].y);
+        }
+
+        const arestas = [];
+
+        for (let i = 0; i < pontos.length; i++) {
+            const p1 = pontos[i];
+            let distanciaMinima = Infinity;
+            let pontoMaisProximo;
+            for (let j = 0; j < pontos.length; j++) {
+                if (i === j) {
+                    continue;
+                }
+                const p2 = pontos[j];
+                const distancia = calcularDistancia(p1, p2);
+                if (distancia < distanciaMinima && !arestaJaExistente(arestas, p1, p2)) {
+                    distanciaMinima = distancia;
+                    pontoMaisProximo = p2;
+                }
+            }
+            if (pontoMaisProximo) {
+                desenharLinha(p1.x, p1.y, pontoMaisProximo.x, pontoMaisProximo.y);
+                arestas.push({p1, p2: pontoMaisProximo});
+            }
+        }
+        }
+
+        function calcularDistancia(p1, p2) {
+        const x = p1.x - p2.x;
+        const y = p1.y - p2.y;
+        return Math.sqrt(x * x + y * y);
+        }
+
+        function arestaJaExistente(arestas, p1, p2) {
+        for (let i = 0; i < arestas.length; i++) {
+        if ((arestas[i].p1 === p1 && arestas[i].p2 === p2) || (arestas[i].p1 === p2 && arestas[i].p2 === p1)) {
+        return true;
+        }
+        }
+        return false;
+        }
+
+        function desenharPonto(x, y) {
+        ctx.beginPath();
+        ctx.fillStyle = "red";
+        ctx.arc(x, y, 5, 0, 2 * Math.PI);
+        ctx.fill();
+        }
+
+        function desenharLinha(x1, y1, x2, y2) {
+        ctx.beginPath();
+        ctx.strokeStyle = "black";
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+        }
+
+        function limparTela() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        document.getElementById("erro").innerHTML = "";
+        }
+    </script>
+</body>
+</html>

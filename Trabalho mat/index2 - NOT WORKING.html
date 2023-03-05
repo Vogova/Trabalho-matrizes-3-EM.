@@ -1,122 +1,113 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Calculadora de Matrizes</title>
-</head>
-<body>
-	<h1>Calculadora de Matrizes</h1>
-    <p>Para separar os valores dentros das matrizes use "espaço" para separar colunas e quebre as linhas para separar as col</p>
-	<form>
-		<label for="matriz1">Matriz 1:</label><br>
-		<textarea id="matriz1" rows="3" cols="30"></textarea><br><br>
-
-		<label for="matriz2">Matriz 2:</label><br>
-		<textarea id="matriz2" rows="3" cols="30"></textarea><br><br>
-
-		<label for="matriz3">Matriz 3:</label><br>
-		<textarea id="matriz3" rows="3" cols="30"></textarea><br><br>
-
-		<label for="operacao1">Operação entre Matriz 1 e Matriz 2:</label><br>
-		<select id="operacao1">
-			<option value="soma">Soma</option>
-			<option value="subtracao">Subtração</option>
-		</select><br><br>
-
-		<label for="operacao2">Operação entre o resultado da primeira operação e a Matriz 3:</label><br>
-		<select id="operacao2">
-			<option value="soma">Soma</option>
-			<option value="subtracao">Subtração</option>
-		</select><br><br>
-
-		<label for="positiva_negativa">Primeira Matriz:</label><br>
-		<select id="positiva_negativa">
-			<option value="positiva">Positiva</option>
-			<option value="negativa">Negativa</option>
-		</select><br><br>
-
-		<button type="button" onclick="calcular()">Calcular</button><br><br>
-
-		<label for="resultado">Resultado:</label><br>
-		<textarea id="resultado" rows="3" cols="30" readonly></textarea><br><br>
-	</form>
-
-	<script>
-		function obterMatriz(id) {
-			var matrizTexto = document.getElementById(id).value.trim();
-			var linhas = matrizTexto.split("\n");
-			var matriz = [];
-			for (var i = 0; i < linhas.length; i++) {
-				var elementosTexto = linhas[i].split(" ");
-				var linha = [];
-				for (var j = 0; j < elementosTexto.length; j++) {
-					var elemento = parseFloat(elementosTexto[j]);
-					if (isNaN(elemento)) {
-						alert("Elemento inválido na linha " + (i+1) + " coluna " + (j+1) + ".");
-						return null;
-					}
-					linha.push(elemento);
-				}
-				matriz.push(linha);
-			}
-			return matriz;
-		}
-
-		function calcular() {
-			// Obter as matrizes
-			var matriz1 = obterMatriz("matriz1");
-			var matriz2 = obterMatriz("matriz2");
-			var matriz3 = obterMatriz("matriz3");
-
-		// Verificar se as matrizes foram inseridas corretamente
-		if (matriz1 == null || matriz2 == null || matriz3 == null) {
-			document.getElementById("resultado").value = "";
-			return;
-		}
-
-		// Verificar se as dimensões das matrizes são compatíveis
-		if (matriz1.length != matriz2.length || matriz1[0].length != matriz2[0].length ||
-			matriz1.length != matriz3.length || matriz1[0].length != matriz3[0].length) {
-			alert("As dimensões das matrizes devem ser iguais.");
-			document.getElementById("resultado").value = "";
-			return;
-		}
-
-		// Obter as operações selecionadas
-		var operacao1 = document.getElementById("operacao1").value;
-		var operacao2 = document.getElementById("operacao2").value;
-
-		// Obter o multiplicador para a primeira matriz
-		var multiplicador = 1;
-		if (document.getElementById("positiva_negativa").value == "negativa") {
-			multiplicador = -1;
-		}
-
-		// Calcular o resultado
-		var resultado = "";
-		for (var i = 0; i < matriz1.length; i++) {
-			for (var j = 0; j < matriz1[0].length; j++) {
-				var valor1 = matriz1[i][j] * multiplicador;
-				var valor2 = matriz2[i][j];
-				var valor3 = matriz3[i][j];
-				var valorResultado;
-				if (operacao1 == "soma") {
-					valorResultado = valor1 + valor2;
-				} else {
-					valorResultado = valor1 - valor2;
-				}
-				if (operacao2 == "soma") {
-					valorResultado += valor3;
-				} else {
-					valorResultado -= valor3;
-				}
-				resultado += valorResultado.toFixed(2) + " ";
-			}
-			resultado += "\n";
-		}
-
-		// Exibir o resultado
-		document.getElementById("resultado").value = resultado;
-	}
+  <head>
+    <meta charset="UTF-8">
+    <title>Desenhar Polígono</title>
+    <style>
+      #canvas {
+        border: 1px solid black;
+      }
+      .ponto {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: red;
+        position: absolute;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Desenhar Polígono</h1>
+    <p>Insira os pares de valores (x, y):</p>
+    <div>
+      <label>Ponto 1:</label>
+      <input type="text" id="ponto1x" placeholder="x">
+      <input type="text" id="ponto1y" placeholder="y">
+    </div>
+    <div>
+      <label>Ponto 2:</label>
+      <input type="text" id="ponto2x" placeholder="x">
+      <input type="text" id="ponto2y" placeholder="y">
+    </div>
+    <div>
+      <label>Ponto 3:</label>
+      <input type="text" id="ponto3x" placeholder="x">
+      <input type="text" id="ponto3y" placeholder="y">
+    </div>
+    <div>
+      <label>Ponto 4:</label>
+      <input type="text" id="ponto4x" placeholder="x">
+      <input type="text" id="ponto4y" placeholder="y">
+    </div>
+    <div>
+      <label>Ponto 5:</label>
+      <input type="text" id="ponto5x" placeholder="x">
+      <input type="text" id="ponto5y" placeholder="y">
+    </div>
+    <div>
+      <label>Ponto 6:</label>
+      <input type="text" id="ponto6x" placeholder="x">
+      <input type="text" id="ponto6y" placeholder="y">
+    </div>
+    <button onclick="desenharPoligono()">Desenhar</button>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+    <script>
+      var pontos = [];
+      var pontoMaisPerto = null;
+      
+      function setup() {
+        var canvas = createCanvas(400, 400);
+        canvas.parent("canvas");
+        background(255);
+      }
+      
+      function draw() {
+        background(255);
+        for (var i = 0; i < pontos.length; i++) {
+          var ponto = pontos[i];
+          fill(255, 0, 0);
+          ellipse(ponto.x, ponto.y, 10, 10);
+        }
+        if (pontoMaisPerto != null) {
+          stroke(0);
+          line(pontoMaisPerto.x, pontoMaisPerto.y, mouseX, mouseY);
+        }
+      }
+      
+      function mouseMoved() {
+    var distanciaMinima = null;
+    for (var i = 0; i < pontos.length; i++) {
+      var ponto = pontos[i];
+      var distancia = dist(mouseX, mouseY, ponto.x, ponto.y);
+      if (distanciaMinima == null || distancia < distanciaMinima) {
+        distanciaMinima = distancia;
+        pontoMaisPerto = ponto;
+      }
+    }
+  }
+  
+  function desenharPoligono() {
+    pontos = [];
+    var ponto1x = parseFloat(document.getElementById("ponto1x").value);
+    var ponto1y = parseFloat(document.getElementById("ponto1y").value);
+    var ponto2x = parseFloat(document.getElementById("ponto2x").value);
+    var ponto2y = parseFloat(document.getElementById("ponto2y").value);
+    var ponto3x = parseFloat(document.getElementById("ponto3x").value);
+    var ponto3y = parseFloat(document.getElementById("ponto3y").value);
+    var ponto4x = parseFloat(document.getElementById("ponto4x").value);
+    var ponto4y = parseFloat(document.getElementById("ponto4y").value);
+    var ponto5x = parseFloat(document.getElementById("ponto5x").value);
+    var ponto5y = parseFloat(document.getElementById("ponto5y").value);
+    var ponto6x = parseFloat(document.getElementById("ponto6x").value);
+    var ponto6y = parseFloat(document.getElementById("ponto6y").value);
+    pontos.push(createVector(ponto1x, ponto1y));
+    pontos.push(createVector(ponto2x, ponto2y));
+    pontos.push(createVector(ponto3x, ponto3y));
+    pontos.push(createVector(ponto4x, ponto4y));
+    pontos.push(createVector(ponto5x, ponto5y));
+    pontos.push(createVector(ponto6x, ponto6y));
+  }
 </script>
-</body>
+  </body>
 </html>
