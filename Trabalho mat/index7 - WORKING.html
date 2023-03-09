@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Plano Cartesiano</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.3.1/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.3.1/addons/p5.dom.js"></script>
+    <style>
+      canvas {
+        display: block;
+        margin: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <label for="x">X:</label>
+      <input type="number" id="x" min="0" max="400" step="10">
+      <label for="y">Y:</label>
+      <input type="number" id="y" min="0" max="400" step="10">
+      <button id="add-point">Adicionar Ponto</button>
+    </div>
+    <script>
+      let points = [];
+
+      function setup() {
+        createCanvas(400, 400);
+      }
+
+      function draw() {
+        background(220);
+        drawAxes();
+        drawPolygon();
+      }
+
+      function drawAxes() {
+        strokeWeight(2);
+        stroke(0);
+        line(0, height/2, width, height/2);
+        line(width/2, 0, width/2, height);
+      }
+
+      function drawPolygon() {
+        strokeWeight(2);
+        stroke(255, 0, 0);
+        noFill();
+        beginShape();
+        for (let p of points) {
+          vertex(p.x, p.y);
+        }
+        endShape(CLOSE);
+
+        if (points.length >= 3) {
+          let area = calculateArea();
+          textSize(20);
+          noStroke();
+          fill(0, 0, 255);
+          text(`Área: ${area}`, 10, 30);
+        }
+      }
+
+      function calculateArea() {
+        let sum1 = 0;
+        let sum2 = 0;
+        let n = points.length;
+
+        for (let i = 0; i < n; i++) {
+          let p1 = points[i];
+          let p2 = points[(i + 1) % n];
+          sum1 += p1.x * p2.y;
+          sum2 += p2.x * p1.y;
+        }
+
+        return abs(sum1 - sum2) / 2;
+      }
+
+      function addPoint() {
+        let x = parseInt(document.getElementById('x').value);
+        let y = parseInt(document.getElementById('y').value);
+
+        if (x >= 0 && x <= width && y >= 0 && y <= height) {
+          points.push(createVector(x, y));
+        }
+
+        document.getElementById('x').value = '';
+        document.getElementById('y').value = '';
+      }
+
+      document.getElementById('add-point').addEventListener('click', addPoint);
+    </script>
+  </body>
+</html>
